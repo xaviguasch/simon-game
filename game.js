@@ -20,4 +20,6 @@ function nextSequence() {
 
 }
 
-nextSequence()
+$(document).keypress(function () {
+    nextSequence()
+});
