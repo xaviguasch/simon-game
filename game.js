@@ -1,9 +1,16 @@
 const buttonColors = ['red', 'blue', 'green', 'yellow']
 const gamePattern = []
 const userClickedPattern = []
+let started = false
+let level = 0
+
 
 $(document).keypress(function () {
-    nextSequence()
+    if (!started) {
+        $('#level-title').text(`Level ${level}`)
+        nextSequence()
+        started = true;
+    }
 });
 
 
@@ -15,7 +22,6 @@ $('.btn').click(function () {
 
     // adding the selected button color to the userClickedPattern array
     userClickedPattern.push(userChosenColour)
-    console.log(userClickedPattern);
 
     // playing audio associated with userChosenColour
     playSound(userChosenColour)
@@ -26,6 +32,11 @@ $('.btn').click(function () {
 
 
 function nextSequence() {
+    level++
+    $('#level-title').text(`Level ${level}`)
+
+    console.log(level);
+
     const randomNumber = Math.floor(Math.random() * 4)
     const randomChosenColour = buttonColors[randomNumber]
 
