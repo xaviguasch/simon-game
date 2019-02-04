@@ -27,6 +27,8 @@ $('.btn').click(function () {
     playSound(userChosenColour)
 
     animatePress(userChosenColour)
+
+    checkAnswer(userClickedPattern.length - 1)
 })
 
 
@@ -34,8 +36,6 @@ $('.btn').click(function () {
 function nextSequence() {
     level++
     $('#level-title').text(`Level ${level}`)
-
-    console.log(level);
 
     const randomNumber = Math.floor(Math.random() * 4)
     const randomChosenColour = buttonColors[randomNumber]
@@ -61,4 +61,19 @@ function animatePress(currentColour) {
     setInterval(() => {
         $(`#${currentColour}`).removeClass('pressed')
     }, 100);
+}
+
+function checkAnswer(currentLevel) {
+    if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
+        console.log('It is the same!');
+        setInterval(() => {
+            nextSequence()
+        }, 1000);
+    } else {
+        console.log('Wrooooong');
+        $('#level-title').text(`Game over!!!`)
+    }
+
+
+
 }
