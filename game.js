@@ -19,6 +19,8 @@ $('.btn').click(function () {
 
     // playing audio associated with userChosenColour
     playSound(userChosenColour)
+
+    animatePress(userChosenColour)
 })
 
 
@@ -29,16 +31,23 @@ function nextSequence() {
 
     gamePattern.push(randomChosenColour)
 
-    // playing audio associated with randonChosenColour
-    playSound(randomChosenColour)
-
     // Adding flickering effect to the randonChosenColour
     $(`#${randomChosenColour}`).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100)
 
+    // playing audio associated with randonChosenColour
+    playSound(randomChosenColour)
 }
 
 
 function playSound(name) {
     const audio = new Audio(`./sounds/${name}.mp3`)
     audio.play()
+}
+
+function animatePress(currentColour) {
+    $(`#${currentColour}`).addClass('pressed')
+
+    setInterval(() => {
+        $(`#${currentColour}`).removeClass('pressed')
+    }, 100);
 }
