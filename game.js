@@ -1,5 +1,6 @@
 const buttonColors = ['red', 'blue', 'green', 'yellow']
 const gamePattern = []
+const userClickedPattern = []
 
 
 function nextSequence() {
@@ -21,8 +22,12 @@ $(document).keypress(function () {
     nextSequence()
 });
 
+// detecting when a button is pressed
 $('.btn').click(function () {
+    // saving which button has been pressed
     const userChosenColour = $(this).attr('id')
-    console.log(userChosenColour);
 
+    // adding the selected button color to the userClickedPattern array
+    userClickedPattern.push(userChosenColour)
+    console.log(userClickedPattern);
 })
