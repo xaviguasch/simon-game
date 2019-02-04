@@ -1,9 +1,10 @@
 const buttonColors = ['red', 'blue', 'green', 'yellow']
-const gamePattern = []
-const userClickedPattern = []
+
+let gamePattern = []
+let userClickedPattern = []
+
 let started = false
 let level = 0
-
 
 $(document).keypress(function () {
     if (!started) {
@@ -15,25 +16,39 @@ $(document).keypress(function () {
 
 
 
-// detecting when a button is pressed
 $('.btn').click(function () {
-    // saving which button has been pressed
     const userChosenColour = $(this).attr('id')
 
-    // adding the selected button color to the userClickedPattern array
     userClickedPattern.push(userChosenColour)
 
-    // playing audio associated with userChosenColour
     playSound(userChosenColour)
-
     animatePress(userChosenColour)
 
     checkAnswer(userClickedPattern.length - 1)
 })
 
 
+function checkAnswer(currentLevel) {
+
+    if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
+        console.log('SUCCESS!');
+
+        if (userClickedPattern.length === gamePattern.length) {
+            console.log('changing level!');
+
+            setTimeout(() => {
+                nextSequence()
+            }, 1000);
+
+        }
+    } else {
+        console.log('Wrooooong');
+    }
+}
 
 function nextSequence() {
+    userClickedPattern = [];
+
     level++
     $('#level-title').text(`Level ${level}`)
 
@@ -42,10 +57,9 @@ function nextSequence() {
 
     gamePattern.push(randomChosenColour)
 
-    // Adding flickering effect to the randonChosenColour
+
     $(`#${randomChosenColour}`).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100)
 
-    // playing audio associated with randonChosenColour
     playSound(randomChosenColour)
 }
 
@@ -58,22 +72,7 @@ function playSound(name) {
 function animatePress(currentColour) {
     $(`#${currentColour}`).addClass('pressed')
 
-    setInterval(() => {
+    setTimeout(() => {
         $(`#${currentColour}`).removeClass('pressed')
     }, 100);
-}
-
-function checkAnswer(currentLevel) {
-    if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
-        console.log('It is the same!');
-        setInterval(() => {
-            nextSequence()
-        }, 1000);
-    } else {
-        console.log('Wrooooong');
-        $('#level-title').text(`Game over!!!`)
-    }
-
-
-
 }
